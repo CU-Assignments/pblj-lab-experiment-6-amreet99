@@ -1,19 +1,47 @@
 implement Java program that uses lambda expressions and Stream API to filter students who scored above 75%, sort them by marks, and display their names.
 
-Step 1: Create the Student Class
-- Define a Student class with attributes:
-    name (String)
-    marks (double)
-- Implement a constructor to initialize these values.
-- Add a display method to print student details.
 
-Step 2: Create the StudentFilterSort Class
-- Create a list of students with sample data.
-- Use Streams Class to:
-      Filter students who scored above 75%.
-      Sort students by marks in descending order.
-      Collect the results into a new list.
-- Use forEach() with a method reference to display results.ts.
+Code: 
+    import java.util.*;
+import java.util.stream.Collectors;
+
+class Student {
+    String name;
+    double marks;
+
+    public Student(String name, double marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    public void display() {
+        System.out.println(name + " (" + marks + ")");
+    }
+}
+
+public class StudentFilterSort {
+    public static void main(String[] args) {
+        List<Student> students = Arrays.asList(
+            new Student("Alice", 80),
+            new Student("Bob", 72),
+            new Student("Charlie", 90),
+            new Student("David", 65),
+            new Student("Eve", 85),
+            new Student("Frank", 65)
+        );
+        
+        List<Student> filteredSortedStudents = students.stream()
+            .filter(s -> s.marks > 75)
+            .sorted(Comparator.comparingDouble((Student s) -> -s.marks).thenComparing(s -> s.name))
+            .collect(Collectors.toList());
+        
+        if (filteredSortedStudents.isEmpty()) {
+            System.out.println("No students scored above 75%.");
+        } else {
+            filteredSortedStudents.forEach(Student::display);
+        }
+    }
+}
 
 
 Test Case	                        Input Data	                                                 Expected Output

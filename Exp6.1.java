@@ -1,22 +1,51 @@
 To implement a Java program that sorts a list of Employee objects (based on name, age, and salary) using lambda expressions and stream operations to demonstrate efficient data processing.
 
-Step 1: Create the Employee Class
--Define an Employee class with the following attributes:
-  name (String)
-  age (int)
-  salary (double)
--Create a constructor to initialize these values.
--Implement a display() method to print employee details.
-  
-Step 2: Create the Main Class
--Initialize an ArrayList<Employee> and add sample employee data.
--Use lambda expressions to sort the list:
-  Sort by Name (Alphabetical order)
-  Sort by Age (Ascending order)
-  Sort by Salary (Descending order)
-  
-Step 3: Display the Sorted List
-Use forEach() with a method reference to print the sorted employees.
+  Code :
+import java.util.*;
+
+class Employee {
+    String name;
+    int age;
+    double salary;
+
+    public Employee(String name, int age, double salary) {
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+    }
+
+    public void display() {
+        System.out.println(name + " (" + age + ", " + salary + ")");
+    }
+}
+
+public class EmployeeSorting {
+    public static void main(String[] args) {
+        List<Employee> employees = Arrays.asList(
+            new Employee("Alice", 30, 50000),
+            new Employee("Bob", 25, 60000),
+            new Employee("Charlie", 35, 55000),
+            new Employee("Alex", 28, 45000),
+            new Employee("Alex", 32, 47000),
+            new Employee("Alex", 25, 46000),
+            new Employee("David", 29, 50000),
+            new Employee("Eve", 31, 50000),
+            new Employee("Frank", 27, 50000)
+        );
+
+        System.out.println("Sorted by Name:");
+        employees.stream().sorted(Comparator.comparing(e -> e.name)).forEach(Employee::display);
+        
+        System.out.println("\nSorted by Age:");
+        employees.stream().sorted(Comparator.comparingInt(e -> e.age)).forEach(Employee::display);
+        
+        System.out.println("\nSorted by Salary:");
+        employees.stream().sorted(Comparator.comparingDouble(e -> -e.salary)).forEach(Employee::display);
+        
+        System.out.println("\nSorted by Salary, then Name:");
+        employees.stream().sorted(Comparator.comparingDouble((Employee e) -> -e.salary).thenComparing(e -> e.name)).forEach(Employee::display);
+    }
+}
 
 
 Test Cases
